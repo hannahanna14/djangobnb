@@ -1,5 +1,6 @@
 'use client'
 
+
 import Modal from "./Modal";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,9 +10,12 @@ import apiService from "@/app/services/apiService";
 import { handleLogin } from "@/app/lib/action";
 import { stringify } from "querystring";
 
+
 const SignUpModal = () => {
+
     //
     // Variables
+
     const router = useRouter();
     const signupModal = useSignupModal();
     const [email, setEmail] = useState('');
@@ -28,7 +32,9 @@ const SignUpModal = () => {
             password2: password2
         }
 
-        const response = await apiService.post('api/auth/register/', JSON.stringify(formData));
+
+        const response = await apiService.postWithoutToken('/api/auth/register/', JSON.stringify(formData));
+
 
         if (response.access) {
             handleLogin(response.user.pk, response.access, response.refresh);
@@ -43,6 +49,7 @@ const SignUpModal = () => {
             setErrors(tmpErrors);
         }
     }
+
 
     const content = (
         <>
@@ -84,5 +91,6 @@ const SignUpModal = () => {
         </>
     )
 }
+
 
 export default SignUpModal;

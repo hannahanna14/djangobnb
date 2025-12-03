@@ -34,7 +34,7 @@ const Categories = () => {
 
             <div className="pb-4 flex flex-col items-center space-y-2 border-b-2 border-white opacity-60 hover:border-gray-200 hover:opacity-100">
                 <Image
-                    src="/icn-category-beach.jpeg"
+                    src="/icn-category-beach.jpg"
                     alt="Categories - Beach"
                     width={20}
                     height={20}

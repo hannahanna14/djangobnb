@@ -4,11 +4,17 @@ import "./globals.css";
 import Navbar from "./components/navbar/navbar";
 import LoginModal from "./components/modals/LoginModal";
 import SignUpModal from "./components/modals/SignupModal";
+import AddPropertyModal from "./components/modals/AddPropertyModal";
+
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -25,8 +31,12 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) 
-{
+}>) {
+
+
+  const content = (
+    <p>Yo yo</p>
+  )
   return (
     <html lang="en">
       <body
@@ -38,9 +48,12 @@ export default function RootLayout({
         <div className="pt-40">
           {children}
         </div>
+
+
         <LoginModal />
         <SignUpModal />
+        <AddPropertyModal />
       </body>
     </html>
   );
-};
+}

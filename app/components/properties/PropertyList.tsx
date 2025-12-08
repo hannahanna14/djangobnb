@@ -1,6 +1,6 @@
 'use client';
 
-
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import PropertyListItem from "./PropertyListItem";
 import apiService from '@/app/services/apiService';
@@ -19,7 +19,7 @@ const PropertyList = () => {
 
 
     const getProperties = async () => {
-        const tmpProperties = await apiService.get('api/properties/')
+        const tmpProperties = await apiService.get('/api/properties/')
 
 
         setProperties(tmpProperties.data)

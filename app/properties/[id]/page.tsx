@@ -1,14 +1,21 @@
 import Image from "next/image";
-import ReservationSidebar from "../../components/properties/ReservationSidebar";
+import Link from "next/link";
+import ReservationSidebar from "@/app/components/properties/ReservationSidebar";
 
 
 import apiService from "@/app/services/apiService";
+import { getUserId } from "@/app/lib/action";
 
 
-const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
-    const resolvedParams = await params;
-    const response = await apiService.get(`/api/properties/${resolvedParams.id}`);
-    const property = response.data;
+
+
+const PropertyDetailPage = async (props: { params: { id: string } }) => {
+    const params = await props.params;
+    const property = await apiService.get(`/api/properties/${params.id}/`);
+    const userId = await getUserId();
+
+
+    console.log('userId', userId);
 
 
     return (
@@ -23,6 +30,7 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
                 />
             </div>
 
+
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div className="py-6 pr-6 col-span-3">
                     <h1 className="mb-4 text-4xl">{property.title}</h1>
@@ -36,26 +44,27 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
                     <hr />
 
 
-
-
-                    <div className="py-6 flex items-center space-x-4">
+                    <Link
+                        href={`/landlords/${property.landlord.id}`}
+                        className="py-6 flex items-center space-x-4"
+                    >
+                        {property.landlord.avatar_url && (
                             <Image
-                                src="/profile-pic-1.jpg"
+                                src={property.landlord.avatar_url}
                                 width={50}
                                 height={50}
                                 className="rounded-full"
                                 alt="The user name"
                                 unoptimized
                             />
-                        <p><strong>Sample</strong> is your host</p>
+                        )}
 
 
+                        <p><strong>{property.landlord.name}</strong> is your host</p>
+                    </Link>
 
 
-                    </div>
                     <hr />
-
-
 
 
                     <p className="mt-6 text-lg">
@@ -64,17 +73,14 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
                 </div>
 
 
-
-
                 <ReservationSidebar
                     property={property}
+                    userId={userId}
                 />
             </div>
         </main>
     )
 }
-
-
 
 
 export default PropertyDetailPage;

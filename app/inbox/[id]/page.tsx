@@ -1,4 +1,5 @@
 import { getUserId } from "../../lib/action";
+import React from 'react';
 import apiService from "@/app/services/apiService";
 import ConversationDetail from "@/app/components/inbox/ConversationDetail";
 import { UserType } from "../page";
@@ -15,7 +16,7 @@ export type MessageType = {
 }
 
 
-const ConversationPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+const ConversationPage = async ({ params }: { params: { id: string } }) => {
     const userId = await getUserId();
     const token = await getAccessToken();
 
@@ -30,7 +31,6 @@ const ConversationPage = async ({ params }: { params: Promise<{ id: string }> })
 
 
     const { id } = await params;
-
     const conversation = await apiService.get(`/api/chat/${id}/`)
 
 
@@ -39,7 +39,7 @@ const ConversationPage = async ({ params }: { params: Promise<{ id: string }> })
             <ConversationDetail
                 token={token}
                 userId={userId}
-                // messages={conversation.messages}
+                messages={conversation.messages}
                 conversation={conversation.conversation}
             />
         </main>
